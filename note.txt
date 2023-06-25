@@ -1,0 +1,36 @@
+PORTAL STRUCTURE
+
+- src/
+  - config/
+    - config.ts                 // Configuration files
+    - database.ts               // Database configuration
+    - logger.ts                 // Logging configuration
+  - controllers/
+    - UserController.ts        // Example controller
+    - AppointmentController.ts  // Example controller
+    - ...
+  - models/
+    - User.ts                  // Example model
+    - Appointment.ts            // Example model
+    - ...
+  - routes/
+    - index.ts                 // Main route handler
+    - userRoutes.ts             // Example user routes
+    - appointmentRoutes.ts      // Example appointment routes
+    - ...
+  - services/
+    - UserService.ts           // Example service
+    - AppointmentService.ts    // Example service
+    - ...
+  - middlewares/
+    - authMiddleware.ts        // Authentication middleware
+    - errorMiddleware.ts       // Error handling middleware
+    - ...
+  - utils/
+    - validationUtils.ts       // Utility functions for validation
+    - ...
+  - app.ts                     // Express application setup
+  - server.ts                  // Server startup file
+- tsconfig.json                // TypeScript configuration file
+- package.json                 // Project dependencies and scripts
+- README.md                    // Project documentation
