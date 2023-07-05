@@ -34,3 +34,10 @@ PORTAL STRUCTURE
 - tsconfig.json                // TypeScript configuration file
 - package.json                 // Project dependencies and scripts
 - README.md                    // Project documentation
+
+========================================================= CODE ===============================================
+
+1. DEPENDENCIES
+
+npm install express @types/express
+
