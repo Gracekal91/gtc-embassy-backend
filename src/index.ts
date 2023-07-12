@@ -1,4 +1,6 @@
 import express, {Request, Response} from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
 const app = express();
 const compression = require('compression');
 const cors = require('cors');
@@ -8,6 +10,14 @@ const http = require('http');
 const port = 3500;
 import path from "path";
 import logger from "./config/logger";
+import dbConnection from "./config/dbConnection";
+
+
+//Connect to the database
+dbConnection();
+
+//load environments variables
+
 
 app.use(cors({
     credentials: true
