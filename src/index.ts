@@ -1,3 +1,4 @@
+import './types/index'
 import express, {Request, Response} from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -12,6 +13,7 @@ import path from "path";
 import logger from "./config/logger";
 import dbConnection from "./config/dbConnection";
 import router from './router'
+
 
 
 //Connect to the database

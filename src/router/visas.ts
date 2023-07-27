@@ -6,15 +6,16 @@ import {
     getVisaByRef,
     getVisaApplicationById,
     updateVisaStatus, deleteVisa
-} from "../controllers/visaControllers";
+} from "../controllers/visa.controllers";
 import { Router } from 'express';
+import isAuthenticated from "../middlewares/auth.middleware";
 
 export default (router: Router): void => {
-    router.get('/visas', getVisas);
+    router.get('/visas',  isAuthenticated, getVisas);
     router.post('/create_visa', createVisa)
     router.get('/visas/:passport', getVisaApplicationsByPassport);
     router.get('/visa/:ref', getVisaByRef);
     router.get('/visaby/:id', getVisaApplicationById);
     router.patch('/visa/:id', updateVisaStatus);
-    router.delete('/visa/:id', deleteVisa)
+    router.delete('/visa/:id', deleteVisa);
 }
