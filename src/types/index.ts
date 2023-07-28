@@ -3,3 +3,9 @@ declare module Express{
         user?: any
     }
 }
+
+declare module JwtPayload{
+    export interface decoded{
+        name?: any
+    }
+}
