@@ -5,5 +5,5 @@ import { Router } from 'express';
 export default (router: Router): void => {
     router.post('/auth/register', createNewUser);
     router.post('/auth/login', login);
-    router.get('/auth/refresh', getRefreshToken)
+    router.post('/auth/refresh', getRefreshToken)
 }

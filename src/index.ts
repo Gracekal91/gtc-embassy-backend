@@ -3,17 +3,17 @@ import express, {Request, Response} from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
 const app = express();
-const compression = require('compression');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const http = require('http');
+import compression from 'compression';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import http from 'http';
 const port = 3500;
 import path from "path";
 import logger from "./config/logger";
 import dbConnection from "./config/dbConnection";
 import router from './router'
-
+import session from "express-session";
 
 
 //Connect to the database
@@ -21,9 +21,14 @@ dbConnection();
 
 //load environments variables
 
-
 app.use(cors({
     credentials: true
+}));
+
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
 }));
 
 app.use(express.static('public'));
