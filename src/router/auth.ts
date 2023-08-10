@@ -3,7 +3,7 @@ import { Router } from 'express';
 
 
 export default (router: Router): void => {
-    router.post('/auth/register', createNewUser);
-    router.post('/auth/login', login);
-    router.post('/auth/refresh', getRefreshToken)
+    router.post('/api/v1/auth/register', createNewUser);
+    router.post('/api/v1/auth/login', login);
+    router.post('/api/v1/auth/refresh', getRefreshToken)
 }
