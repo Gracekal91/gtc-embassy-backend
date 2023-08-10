@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import express from 'express';
 import {createUser, getUSerByEmail} from "../actions/userActions";
-import {authentication, random} from "../helpers";
+import {generateAccessToken, generateRefreshToken} from "../helpers";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import UserModel from '../models/user'
@@ -40,7 +40,7 @@ export const login = async (req: express.Request, res: express.Response) =>{
         //@ts-ignore
         req.session.refresh_token = refreshToken
 
-        return res.json({accessToken, refreshToken});
+        return res.status(200).json({accessToken, refreshToken, user_id: user._id});
 
     }catch (e) {
         console.log('Error', e);
@@ -48,16 +48,6 @@ export const login = async (req: express.Request, res: express.Response) =>{
     }
 }
 
-// This will go in the helper
-const generateAccessToken = (userId: string) => {
-    const secretKey = process.env.JWT_SECRET || 'default-secret';
-    return jwt.sign({ userId }, secretKey, { expiresIn: '30s' });
-};
-
-const generateRefreshToken = (userId: string) => {
-    const secretKey = process.env.JWT_REFRESH_SECRET || 'default-secret';
-    return jwt.sign({ userId }, secretKey, { expiresIn: '120s' });
-};
 
 /*
 * POST
@@ -96,14 +86,13 @@ export const createNewUser = async (req: express.Request, res: express.Response)
 export const getRefreshToken = async (req: express.Request, res: express.Response) => {
     try{
         const { refreshToken } = req.body;
-        console.log('>>>>>>>>>>>>>>>>> I am the refresh token from passed from the MW but I am in the controllers', refreshToken)
         const cookies = req.cookies;
 
         const refreshSecret: string | undefined = process.env.JWT_REFRESH_SECRET;
         const accessSecret: string | undefined = process.env.JWT_SECRET;
 
-        //if(!cookies?.GTE_AUTH) return res.status(401).json('No GTE_AUTH cookies');
-        //const refreshToken = cookies.GTE_AUTH;
+        if(!refreshToken) return res.status(401).json('No refresh token');
+
         const user = await UserModel.findOne({refreshToken}).exec();
         if(!user) return  res.sendStatus(403);
 
@@ -112,7 +101,6 @@ export const getRefreshToken = async (req: express.Request, res: express.Respons
             // @ts-ignore
             refreshSecret,
             async (err, decoded) =>{
-                        console.log('====================', decoded)
                 // @ts-ignore
                 if(err || user?._id != decoded?.userId) return res.sendStatus(403);
                 // @ts-ignore
@@ -123,7 +111,7 @@ export const getRefreshToken = async (req: express.Request, res: express.Respons
                 //can decode roles here
                 const accessToken = jwt.sign(
                     // @ts-ignore
-                    {'user_name':decoded?.name },
+                    {'user_id':decoded?._id },
                     // @ts-ignore
                     accessSecret,
                     {expiresIn: '60s'}

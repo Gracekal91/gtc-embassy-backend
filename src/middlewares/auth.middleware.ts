@@ -2,15 +2,8 @@
 import express, { Request, Response, NextFunction } from 'express';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import { CookieJar } from 'tough-cookie';
-import User from '../models/user';
 
 const secretKey = process.env.JWT_SECRET || 'default-secret';
-
-const generateAccessToken = (userId: string) => {
-    const secretKey = process.env.JWT_SECRET || 'default-secret';
-    return jwt.sign({ userId }, secretKey, { expiresIn: '60s' });
-};
 
 const isAuthenticated = async (req: express.Request, res: express.Response, next: NextFunction) => {
     const authHeader = req.headers.authorization || req.headers.Authorization;
@@ -34,7 +27,7 @@ const isAuthenticated = async (req: express.Request, res: express.Response, next
 
                 try {
                     const refreshResponse = await axios.post(
-                        'http://localhost:3500/auth/refresh',
+                        'http://localhost:3500/api/v1/auth/refresh',
                         JSON.stringify({ refreshToken }), // Pass the refresh token in the request body
                         {
                             headers: {
@@ -64,7 +57,7 @@ const isAuthenticated = async (req: express.Request, res: express.Response, next
             // Token is valid, continue with the request
             req.headers.authorization = `Bearer ${token}`; // Make sure to set the original token in the request header
             // @ts-ignore
-            req.user = decoded?.user_name;
+            req.userId = decoded?.user_id;
             next();
         }
     });

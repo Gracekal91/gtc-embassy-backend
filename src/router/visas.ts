@@ -13,9 +13,9 @@ import isAuthenticated from "../middlewares/auth.middleware";
 export default (router: Router): void => {
     router.get('/visas',  isAuthenticated, getVisas);
     router.post('/create_visa', createVisa)
-    router.get('/visas/:passport', getVisaApplicationsByPassport);
-    router.get('/visa/:ref', getVisaByRef);
-    router.get('/visaby/:id', getVisaApplicationById);
-    router.patch('/visa/:id', updateVisaStatus);
-    router.delete('/visa/:id', deleteVisa);
+    router.get('/visas/:passport', isAuthenticated, getVisaApplicationsByPassport);
+    router.get('/visa/:ref', isAuthenticated, getVisaByRef);
+    router.get('/visaby/:id', isAuthenticated, getVisaApplicationById);
+    router.patch('/visa/:id', isAuthenticated, updateVisaStatus);
+    router.delete('/visa/:id', isAuthenticated, deleteVisa);
 }
