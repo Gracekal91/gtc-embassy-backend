@@ -125,3 +125,25 @@ export const getRefreshToken = async (req: express.Request, res: express.Respons
     }
 
 }
+
+export const logout = async (req: express.Request, res: express.Response) => {
+    try {
+        const { GTE_AUTH: refreshToken } = req.cookies;
+        if (!refreshToken) return res.status(401).json('No refresh token');
+
+        const user = await UserModel.findOne({ refreshToken }).exec();
+
+        if (!user) return res.sendStatus(403);
+
+        // @ts-ignore
+        user.refreshToken = null; // Clear the refresh token
+        await user.save();
+
+        res.clearCookie('GTE_AUTH'); // Clear the refresh token cookie
+        res.json('Logout successful');
+    } catch (e) {
+        console.log('Error', e);
+        res.status(400);
+    }
+}
+
