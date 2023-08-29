@@ -11,10 +11,10 @@ export const authentication = (salt: string, password: string) => {
 
 export const generateAccessToken = (userId: string) => {
     const secretKey = process.env.JWT_SECRET || 'default-secret';
-    return jwt.sign({ userId }, secretKey, { expiresIn: '30s' });
+    return jwt.sign({ userId }, secretKey, { expiresIn: '120s' });
 };
 
 export const generateRefreshToken = (userId: string) => {
     const secretKey = process.env.JWT_REFRESH_SECRET || 'default-secret';
-    return jwt.sign({ userId }, secretKey, { expiresIn: '120s' });
+    return jwt.sign({ userId }, secretKey, { expiresIn: '360s' });
 };

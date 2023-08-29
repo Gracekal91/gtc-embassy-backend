@@ -21,9 +21,7 @@ dbConnection();
 
 //load environments variables
 
-app.use(cors({
-    credentials: true
-}));
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 app.use(session({
     secret: 'your-secret-key',
