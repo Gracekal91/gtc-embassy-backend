@@ -35,7 +35,9 @@ export const login = async (req: express.Request, res: express.Response) =>{
         res.cookie('GTE_AUTH', refreshToken, {
             httpOnly: true, // Cookie cannot be accessed via JavaScript
             //secure: process.env.NODE_ENV === 'production', // Set to true in production
-            sameSite: 'strict', // Enforce same-site cookies
+            sameSite: 'none', // Enforce same-site cookies
+            secure: true
+            //domain: 'http://localhost:3500/'
         });
         //@ts-ignore
         req.session.refresh_token = refreshToken
@@ -127,20 +129,22 @@ export const getRefreshToken = async (req: express.Request, res: express.Respons
 }
 
 export const logout = async (req: express.Request, res: express.Response) => {
-    try {
-        const { GTE_AUTH: refreshToken } = req.cookies;
-        if (!refreshToken) return res.status(401).json('No refresh token');
 
-        const user = await UserModel.findOne({ refreshToken }).exec();
+    //fetch user by ID
+    //delete the refresh token
+    // issue getUserBy ID should be protected - and need to pass access token here to access user data
+    try {
+        // @ts-ignore
+        const {id} = req.body;
+
+        const user = await UserModel.findById( id ).exec();
 
         if (!user) return res.sendStatus(403);
 
         // @ts-ignore
         user.refreshToken = null; // Clear the refresh token
         await user.save();
-
-        res.clearCookie('GTE_AUTH'); // Clear the refresh token cookie
-        res.json('Logout successful');
+        res.status(200).json('Successful logged out')// Clear the refresh token cookie
     } catch (e) {
         console.log('Error', e);
         res.status(400);
