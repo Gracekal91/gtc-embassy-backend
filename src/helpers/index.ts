@@ -11,7 +11,7 @@ export const authentication = (salt: string, password: string) => {
 
 export const generateAccessToken = (userId: string) => {
     const secretKey = process.env.JWT_SECRET || 'default-secret';
-    return jwt.sign({ userId }, secretKey, { expiresIn: '120s' });
+    return jwt.sign({ userId }, secretKey, { expiresIn: '20s' });
 };
 
 export const generateRefreshToken = (userId: string) => {
