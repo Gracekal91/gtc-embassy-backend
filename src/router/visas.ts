@@ -11,7 +11,7 @@ import { Router } from 'express';
 import isAuthenticated from "../middlewares/auth.middleware";
 
 export default (router: Router): void => {
-    router.get('/visas',  isAuthenticated, getVisas);
+    router.get('/api/v1/visas',  isAuthenticated, getVisas);
     router.post('/create_visa', createVisa)
     router.get('/visas/:passport', isAuthenticated, getVisaApplicationsByPassport);
     router.get('/visa/:ref', isAuthenticated, getVisaByRef);
