@@ -74,7 +74,7 @@ export const getVisaByRef = async (req: express.Request, res: express.Response) 
     }
 }
 
-//get Visa Application by Id
+//get Visa Application by ID
 
 export const getVisaApplicationById = async (req: express.Request, res: express.Response) => {
     try{
