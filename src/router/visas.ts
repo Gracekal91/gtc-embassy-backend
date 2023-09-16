@@ -16,6 +16,6 @@ export default (router: Router): void => {
     router.get('/visas/:passport', isAuthenticated, getVisaApplicationsByPassport);
     router.get('/visa/:ref', isAuthenticated, getVisaByRef);
     router.get('/api/v1/visaby/:id', isAuthenticated, getVisaApplicationById);
-    router.patch('/visa/:id', isAuthenticated, updateVisaStatus);
+    router.patch('/api/v1/visa/:id', isAuthenticated, updateVisaStatus);
     router.delete('/visa/:id', isAuthenticated, deleteVisa);
 }

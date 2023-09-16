@@ -85,7 +85,7 @@ const VisaSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['submitted', 'payment', 'in-progress', 'ready'],
+        enum: ['submitted', 'payment', 'in-progress', 'done'],
         default: 'submitted'
     },
     picture: {

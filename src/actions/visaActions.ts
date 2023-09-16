@@ -33,7 +33,7 @@ export const updateVisaApplicationById = async (id: string, values: Record<strin
 
 //Admin can do all + delete application
 export const deleteVisaApplicationById = (id: string) => VisaModel.findOneAndDelete({_id: id});
-export const updateStatus = async (id: string, value: any | string) => VisaModel.findByIdAndUpdate(id, value);
+export const updateStatus =  (id: string, value: any | string) =>  VisaModel.findByIdAndUpdate(id, value);
 
 
 

@@ -95,14 +95,13 @@ export const getVisaApplicationById = async (req: express.Request, res: express.
 
 export const updateVisaStatus = async (req: express.Request, res: express.Response) =>{
     const {id} = req.params;
-    const {status} = req.body;
+    const status = req.body?.value
     try{
-        const visa = getVisaById(id);
+        const visa = await getVisaById(id);
         if(!visa) return res.send(400);
         await updateStatus(id, {status});
         return res.json(`successfully update new status is : ${status}`)
-        //find the application
-        // and get the status from the user
+
     }catch (e) {
         console.log('Error', e);
         throw e;
